@@ -1,0 +1,12 @@
+{
+  "name": "tiny-tour",
+  "version": "1.0.0",
+  "main": "src/tour.js",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}
