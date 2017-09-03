@@ -138,3 +138,6 @@ tour.override('end', function(self) {
   }, 300);
 })
 ```
+
+## Contributing
+Bug reports and pull requests are greatly appreciated.
