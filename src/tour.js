@@ -1,5 +1,8 @@
 
 window.Tour = (function(my, options) {
+  var OVERLAY = 'ttour-overlay';
+  var WRAPPER = 'ttour-wrapper';
+  var TIP = 'ttour-tip';
 
   my.prototype.init = function(options) {
     this.current = 0;
@@ -33,38 +36,49 @@ window.Tour = (function(my, options) {
 
   my.prototype.showStep = function(step) {
     var position = elementPosition(step.element, this.container, this.padding);
-    if(!!this.tip) {
-        this.overlay.children[0].removeChild(this.tip);
+    var wrapper = getElement(this, '.'+WRAPPER);
+    var tip = getElement(this, '.'+TIP);
+    if(!!tip) {
+        wrapper.removeChild(tip);
     }
-    this.tip = createTip.call(this, step, this.tipClasses + " " + step.position || "bottom");
-    setPosition(this.overlay, position);
+    tip = createTip.call(this, step, step.position || "bottom");
+    wrapper.appendChild(tip);
+    setPosition(getElement(this, '.' + OVERLAY), position);
   }
 
   my.prototype.showOverlay = function() {
-    this.shadow = this.shadow || createShadow.call(this);
-    this.container.appendChild(this.shadow);
-    this.shadow.onclick = this.end.bind(this);
+    this.el = this.el || createShadow.call(this);
+    this.container.appendChild(this.el);
   }
 
   my.prototype.end = function() {
-    this.container.removeChild(this.shadow);
-    this.shadow = this.overlay = this.tip = null;
+    this.container.removeChild(this.el);
+    this.el = null;
+  }
+
+  var getElement = function(self, selector) {
+    return self.el.querySelector(selector);
   }
 
   var createShadow = function() {
-    var shadow = document.createElement("div");
-    shadow.className = "ttour-shadow";
-    shadow.appendChild(this.overlay = createOverlay());
-    return shadow;
+    return newElement("div", {
+      className: "ttour-shadow",
+      onclick: this.end.bind(this)
+    }, [
+      createOverlay()
+    ]);
   }
 
   var createOverlay = function() {
-    var overlay = document.createElement("div");
-    var wrapper = document.createElement("div");
-    overlay.className = "ttour-overlay";
-    wrapper.className = "ttour-wrapper";
-    overlay.appendChild(wrapper);
-    return overlay;
+    var wrapper = newElement("div", {
+      className: WRAPPER
+    })
+
+    return newElement("div", {
+      className: OVERLAY
+    }, [
+      wrapper
+    ]);
   }
 
   var setPosition = function(el, position) {
@@ -75,87 +89,97 @@ window.Tour = (function(my, options) {
   }
 
   var createArrow = function() {
-    var arrow = document.createElement("div");
-    arrow.className = "ttour-arrow";
-    return arrow
+    return newElement("div", {
+      className: "ttour-arrow"
+    })
   }
 
   var createTip = function(step, classes) {
-    var tip = document.createElement("div");
-    tip.className = "ttour-tip tip-"+ this.current + " " + classes;
-    tip.appendChild(tipHeader(step.title));
-    tip.appendChild(tipBody(step.description));
-    tip.appendChild(tipFooter.call(this))
-    tip.appendChild(createArrow());
-    tip.style.position = 'absolute';
-    tip.onclick = function(e) { e.stopPropagation(); }
-    this.overlay.children[0].appendChild(tip);
-    return tip;
+    return newElement("div", {
+      className: TIP+" tip-"+ this.current + " " + classes,
+      style: { position: 'absolute' },
+      onclick: function(e) { e.stopPropagation(); }
+    }, [
+      tipHeader(step.title),
+      tipBody(step.description),
+      tipFooter.call(this),
+      createArrow()
+    ]);
   }
 
   var tipHeader = function(title) {
-    var header = document.createElement("div");
-    header.className = "ttour-header";
-    header.appendChild(tipTitle(title))
-    return header;
+    return newElement("div", {
+      className: "ttour-header"
+    }, [
+      tipTitle(title)
+    ]);
   }
 
   var tipBody = function(description) {
-    var tbody = document.createElement("div");
-    tbody.className = "ttour-body";
-    tbody.innerHTML = description;
-    return tbody;
+    return newElement("div", {
+      className: "ttour-body",
+      innerHTML: description
+    })
   }
 
   var tipFooter = function() {
-    var tfoot = document.createElement("div");
-    tfoot.className = "ttour-footer";
-    tfoot.appendChild(createBullets(this.steps.length, this.current))
-    tfoot.appendChild(nextButton.call(this, (this.steps.length - 1) == this.current))
+    var children = [
+      createBullets(this.steps.length, this.current),
+      nextButton.call(this, (this.steps.length - 1) == this.current)
+    ]
+
     if(this.current > 0)
-      tfoot.appendChild(prevButton.call(this))
+      children.push(prevButton.call(this))
+
+    var tfoot = newElement("div", {
+      className: "ttour-footer"
+    }, children)
     return tfoot;
   }
 
   var createBullets = function(totalSteps, current) {
-    var bullets = document.createElement("div");
-    bullets.className = "ttour-bullets";
+    var children = []
     for(var i = 0; i < totalSteps; i++) {
-      bullets.appendChild(createBullet(i == current));
+      children.push(createBullet(i == current));
     }
-    return bullets;
+
+    return newElement("div", {
+      className: "ttour-bullets"
+    }, children);
   }
 
   var createBullet = function(active) {
-    var bullet = document.createElement("div");
-    bullet.className = "ttour-bullet " + (active ? 'active' : '');
-    return bullet;
+    return newElement("div", {
+      className: "ttour-bullet " + (active ? 'active' : '')
+    })
   }
 
   var nextButton = function(last) {
-    var button = document.createElement("button");
-    button.className = "next";
-    button.innerText = last ? this.doneText : this.nextText;
-    button.onclick = this.nextStep.bind(this);
-    return button;
+    return newElement("button", {
+      className: "next",
+      innerText: last ? this.done : this.next,
+      onclick: this.nextStep.bind(this)
+    });
   }
 
   var prevButton = function() {
-    var button = document.createElement("button");
-    button.className = "prev";
-    button.innerText = this.prevText;
-    button.onclick = this.prevStep.bind(this);
-    return button
+    return newElement("button", {
+      className: "prev",
+      innerText: this.prev,
+      onclick: this.prevStep.bind(this)
+    });
   }
 
   var tipTitle = function(titleText) {
-    var title = document.createElement('h1');
-    title.innerText = titleText;
-    return title;
+    return newElement("h1", {
+      innerText: titleText
+    })
   }
 
   var elementPosition = function(element, parentEl, padding) {
-    var el = parentEl.querySelector(element);
+    // Default to the parentEl if we can't find the element. This should be obvious enough
+    // to the caller that the element was not able to be found.
+    var el = parentEl.querySelector(element) || parentEl;
     var position = el.getBoundingClientRect();
     return {
       left: parentEl.scrollLeft + position.left - padding,
@@ -165,15 +189,23 @@ window.Tour = (function(my, options) {
     }
   }
 
+  var newElement = function(tag, attributes, children) {
+    var el = document.createElement(tag);
+    Object.assign(el, attributes);
+    for(var i = 0; i < (children || []).length; i++) {
+      el.appendChild(children[i]);
+    }
+    return el;
+  }
+
   var defaults = function() {
     return {
       steps: [],
       padding: 3,
       container: document.body,
-      nextText: "Next",
-      doneText: "Done",
-      prevText: "Prev",
-      tipClasses: ""
+      next: "Next",
+      done: "Done",
+      prev: "Prev"
     }
   }
 

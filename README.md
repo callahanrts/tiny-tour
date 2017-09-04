@@ -39,9 +39,6 @@ __doneText__ - The text on the button when the last tip is displayed.
 
 __prevText__ - The text on the previous step button.
 
-__tipClasses__ - Extra classes that should be applied to the tip (space separated).
-
-
 ### Defining a Step
 ```javascript
 {
