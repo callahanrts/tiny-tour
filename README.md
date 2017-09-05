@@ -1,6 +1,5 @@
 # Tiny Tour
-Tiny Tour is a __really__ small javascript library for adding a tour to your website. Tiny Tour
-aims to give you the tour functionality you need. Nothing less, and certainly nothing more.
+Tiny Tour is a __really__ small JavaScript library for adding a tour to your website.
 
 ![alt Basic tutorial](screenshots/full_page.png)
 
