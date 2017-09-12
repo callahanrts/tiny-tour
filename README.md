@@ -1,6 +1,9 @@
 # Tiny Tour
 Tiny Tour is a __really__ small JavaScript library for adding a tour to your website.
 
+![min size](http://img.badgesize.io/callahanrts/tiny-tour/master/dist/tour.min.js?label=min.js)
+![gzip size](http://img.badgesize.io/callahanrts/tiny-tour/master/dist/tour.min.js?label=gzipped&compression=gzip)
+
 ![alt Basic tutorial](screenshots/full_page.png)
 
 ## Getting Started
@@ -120,6 +123,7 @@ and hide.
 ```javascript
 tour.override('showStep', function(self, step) {
   self(step);
+
   setTimeout(function(){
     var overlay = document.getElementsByClassName("ttour-overlay")[0];
     overlay.style.opacity = 1;
@@ -129,6 +133,7 @@ tour.override('showStep', function(self, step) {
 tour.override('end', function(self) {
   var overlay = document.getElementsByClassName("ttour-overlay")[0];
   overlay.style.opacity = 0;
+
   setTimeout(function(){
     self();
   }, 300);
@@ -136,4 +141,4 @@ tour.override('end', function(self) {
 ```
 
 ## Contributing
-Bug reports and pull requests are greatly appreciated.
+Bug reports and pull requests are always welcome.
