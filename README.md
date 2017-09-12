@@ -1,6 +1,7 @@
 # Tiny Tour
 Tiny Tour is a __really__ small JavaScript library for adding a tour to your website.
 
+![build status](https://travis-ci.org/callahanrts/tiny-tour.svg?branch=master)
 ![min size](http://img.badgesize.io/callahanrts/tiny-tour/master/dist/tour.min.js?label=min.js)
 ![gzip size](http://img.badgesize.io/callahanrts/tiny-tour/master/dist/tour.min.js?label=gzipped&compression=gzip)
 
