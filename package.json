@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "chai": "^4.1.2",
+    "expect.js": "^0.3.1",
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-uglify": "^3.0.1",

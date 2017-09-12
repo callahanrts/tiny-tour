@@ -1,12 +1,12 @@
 
-window.Tour = (function(my, options) {
+window.Tour = (function(my) {
   var OVERLAY = 'ttour-overlay';
   var WRAPPER = 'ttour-wrapper';
   var TIP = 'ttour-tip';
 
   my.prototype.init = function(options) {
     this.current = 0;
-    Object.assign(this, defaults(), options);
+    set.call(this, defaults(), options);
   };
 
   my.prototype.override = function(name, newMethod) {
@@ -191,7 +191,7 @@ window.Tour = (function(my, options) {
 
   var newElement = function(tag, attributes, children) {
     var el = document.createElement(tag);
-    Object.assign(el, attributes);
+    set.call(el, attributes);
     for(var i = 0; i < (children || []).length; i++) {
       el.appendChild(children[i]);
     }
@@ -207,6 +207,16 @@ window.Tour = (function(my, options) {
       done: "Done",
       prev: "Prev"
     };
+  };
+
+  var set = function() {
+    var self = this;
+    for(var i = 0; i < arguments.length; i++) {
+      var keys = Object.keys(arguments[i]);
+      for(var j = 0; j < keys.length; j++) {
+        self[keys[j]] = arguments[i][keys[j]];
+      }
+    }
   };
 
   return my;
