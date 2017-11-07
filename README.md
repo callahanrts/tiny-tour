@@ -36,11 +36,11 @@ __steps__ - An array of steps that make up the tour.
 __padding__ - How much padding is around the element the tip is being
 applied to.
 
-__nextText__ - The text on the next step button.
+__next__ - The text on the next step button.
 
-__doneText__ - The text on the button when the last tip is displayed.
+__done__ - The text on the button when the last tip is displayed.
 
-__prevText__ - The text on the previous step button.
+__prev__ - The text on the previous step button.
 
 ### Defining a Step
 ```javascript
