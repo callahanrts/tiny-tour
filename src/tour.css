@@ -123,51 +123,35 @@
               0 3px 1px -1px rgba(0,0,0,0.2);
 }
 
-
 .ttour-arrow {
   position: absolute;
-  width: 0;
-  height: 0;
+  width: 14px;
+  height: 14px;
+  transform-origin: 0 0;
+  background-color: #fff;
+  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .ttour-tip.right .ttour-arrow {
   top: 15px;
   left: 0px;
-  border: 7px solid black;
-  border-color: transparent transparent #fff #fff;
-  transform-origin: 0 0;
   transform: rotate(45deg);
-  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .ttour-tip.bottom .ttour-arrow {
   top: 0;
   left: 35px;
-  border: 7px solid black;
-  border-color: transparent transparent #fff #fff;
-  transform-origin: 0 0;
   transform: rotate(135deg);
-  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
-
 
 .ttour-tip.left .ttour-arrow {
   right: -14px;
   top: 30px;
-  border: 7px solid black;
-  border-color: transparent transparent #fff #fff;
-  transform-origin: 0 0;
   transform: rotate(-136deg);
-  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .ttour-tip.top .ttour-arrow {
   bottom: -14px;
   left: 25px;
-  border: 7px solid black;
-  border-color: transparent transparent #fff #fff;
-  transform-origin: 0 0;
   transform: rotate(-45deg);
-  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
-
